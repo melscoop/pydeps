@@ -9,7 +9,7 @@ jobs:
   ci:
     name: Continuous Integration
     runs-on: ubuntu-20.04
-    container: thebjorn/pydeps-agent:ci-${{ matrix.python-version }}
+    container: 1aleks0ivanov1/pydeps-agent:ci-${{ matrix.python-version }}
     outputs:
       package_version: ${{ steps.proj_ver_determiner.outputs.package_version }}
       package_version_tag: ${{ steps.proj_ver_determiner.outputs.package_version_tag }}
@@ -17,13 +17,10 @@ jobs:
       should_deploy: ${{ steps.proj_ver_determiner.outputs.should_deploy }}
     strategy:
       matrix:
-        python-version: [ '2.7', '3.6', '3.7', '3.8', '3.9' ]
+        python-version: [ '2.7' ]
     steps:
-
-      - name: Clone repository
-        run: |
-          git config --global http.sslverify false
-          git clone https://github.com/${{ github.repository }}.git .
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
       - name: Setup directories
         shell: bash
